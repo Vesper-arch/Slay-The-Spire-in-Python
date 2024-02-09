@@ -1,5 +1,6 @@
 from enum import StrEnum, auto
 
+
 class CombatTier(StrEnum):
     NORMAL = 'Normal'
     ELITE = 'Elite'
@@ -46,3 +47,11 @@ class CardCategory(StrEnum):
     CARD = 'Card'
     POTION = 'Potion'
     RELIC = 'Relic'
+
+class PlayerClass(StrEnum):
+    IRONCLAD = 'Ironclad'
+    SILENT = 'Silent'
+    DEFECT = 'Defect'
+    WATCHER = 'Watcher'
+    COLORLESS = 'Colorless'
+    ANY = 'Any'
