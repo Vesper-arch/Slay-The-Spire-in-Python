@@ -1,5 +1,6 @@
 from enum import StrEnum, auto
 
+
 class CombatTier(StrEnum):
     NORMAL = 'Normal'
     ELITE = 'Elite'
@@ -15,30 +16,38 @@ class EncounterType(StrEnum):
     UNKNOWN = auto()
 
 class Rarity(StrEnum):
-    BASIC ='Basic'
-    BOSS ='Boss'
-    COMMON ='Common'
-    CURSE ='Curse'
-    EVENT ='Event'
-    RARE ='Rare'
-    SHOP ='Shop'
-    SPECIAL ='Special'
-    STARTER ='Starter'
-    UNCOMMON ='Uncommon'
+    BASIC = 'Basic'
+    STARTER = 'Starter'
+    COMMON = 'Common'
+    UNCOMMON = 'Uncommon'
+    RARE = 'Rare'
+    SPECIAL = 'Special'
+    CURSE = 'Curse'
+    STATUS = 'Status'
+    BOSS = 'Boss'
+    EVENT = 'Event'
+    SHOP = 'Shop'
 
 class CardType(StrEnum):
     ATTACK = 'Attack'
     SKILL = 'Skill'
     POWER = 'Power'
-    STATUS = 'Status'
     CURSE = 'Curse'
+    STATUS = 'Status'
+
+class PlayerClass(StrEnum):
+    IRONCLAD = 'Ironclad'
+    SILENT = 'Silent'
+    DEFECT = 'Defect'
+    WATCHER = 'Watcher'
+    COLORLESS = 'Colorless'
+    ANY = 'Any'
 
 class TargetType(StrEnum):
     ANY = 'Any'
-    AREA = 'Area'
-    ENEMY = 'Enemy'
+    AREA = 'Area' # Also use for cards that target a random enemy
+    ENEMY = 'Enemy' # Only for use in enemy moves when the enemy targets another enemy
     NOTHING = 'Nothing'
-    RANDOM = 'Random'
     SINGLE = 'Single'
     YOURSELF = 'Yourself'
 
@@ -46,3 +55,9 @@ class CardCategory(StrEnum):
     CARD = 'Card'
     POTION = 'Potion'
     RELIC = 'Relic'
+
+class EnemyState(StrEnum):
+    ALIVE = 'alive'
+    DEAD = 'dead'
+    ESCAPED = 'escaped'
+    INTANGIBLE = 'intangible' # Enemies that revive have a period where they cannot be attacked and have no intent.
