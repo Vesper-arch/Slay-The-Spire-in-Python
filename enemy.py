@@ -282,6 +282,11 @@ class Enemy(Registerable):
         if self.state == State.ALIVE:
             self.execute_move(player, enemies)
 
+    def take_sourceless_dmg(self, dmg):
+        self.health -= dmg
+        if self.health <= 0:
+            self.die()
+
     def callback(self, message, data):
         global bus
         if message == Message.START_OF_TURN:

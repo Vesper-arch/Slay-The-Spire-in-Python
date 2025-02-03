@@ -335,15 +335,18 @@ class Combust(Effect):
             "Combust",
             StackType.INTENSITY,
             EffectType.BUFF,
-            "At the end of your turn, deals X damage to ALL enemies.",
+            f"At the end of your turn, lose 1 HP and deals {amount} damage to ALL enemies.",
             amount,
         )
 
     def callback(self, message, data: tuple[Player, list[Enemy]]):
         if message == Message.END_OF_TURN:
             player, enemies = data
+            player.take_sourceless_dmg(1)
             for enemy in enemies:
-                enemy.health -= self.amount
+                ansiprint(f"{enemy.name} took {self.amount} damage from <buff>Combust</buff>.")
+                enemy.take_sourceless_dmg(self.amount)
+
 
 
 class DarkEmbrace(Effect):
@@ -424,7 +427,7 @@ class FireBreathing(Effect):
             player, card, target, enemies = data
             if card.type == CardType.ATTACK:
                 for enemy in enemies:
-                    enemy.health -= self.amount
+                    enemy.take_sourceless_dmg(self.amount)
                     ansiprint(
                         f"{enemy.name} took {self.amount} damage from <buff>Fire Breathing</buff>."
                     )
@@ -432,7 +435,7 @@ class FireBreathing(Effect):
 
 class FlameBarrier(Effect):
     # "Gain 12 <keyword>Block</keyword>. Whenever you're attacked this turn, deal 4 damage back."
-    registers = [Message.ON_ATTACKED]
+    registers = [Message.AFTER_ATTACK]
 
     def __init__(self, host, amount):
         super().__init__(
@@ -444,10 +447,12 @@ class FlameBarrier(Effect):
             amount,
         )
 
-    def callback(self, message, data):
-        if message == Message.ON_ATTACKED:
-            target = data
-            target.health -= 4
+    def callback(self, message, data: tuple[Player|Enemy, Player|Enemy, int]):
+        if message == Message.AFTER_ATTACK:
+            attacker, victim, damage = data
+            if victim == self.host:
+                ansiprint(f"{attacker.name} took 4 damage from {victim.name}'s <buff>Flame Barrier</buff>.")
+                attacker.take_sourceless_dmg(4)
 
 
 class Metallicize(Effect):

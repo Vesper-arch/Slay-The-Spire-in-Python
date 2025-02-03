@@ -511,7 +511,11 @@ class WildStrike(Card):
 
     def apply(self, origin, target):
         origin.attack(target, self)
-        origin.draw_pile.insert(random.randint(0, len(origin.draw_pile) - 1), Wound())
+        # Handle when the player has no draw pile
+        if len(origin.draw_pile) == 0:
+            origin.draw_pile.append(Wound())
+        else:
+            origin.draw_pile.insert(random.randint(0, len(origin.draw_pile) - 1), Wound())
 
 class BattleTrance(Card):
     def __init__(self):
